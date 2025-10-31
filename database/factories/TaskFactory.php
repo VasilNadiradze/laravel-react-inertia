@@ -16,7 +16,7 @@ class TaskFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {     
+    {
         // pick a random user (or first user)
         $user = User::first() ?? User::factory()->create();
 
@@ -24,9 +24,9 @@ class TaskFactory extends Factory
             'name' => fake()->sentence(),
             'description' => fake()->realText(),
             'due_date' => fake()->dateTimeBetween('now', '+1 year'),
-            'status' => fake()->randomElement(['pending','in_progress','completed']),
-            'priority' => fake()->randomElement(['low','medium','high']),
-            'image_path' => fake()->imageUrl(),
+            'status' => fake()->randomElement(['pending', 'in_progress', 'completed']),
+            'priority' => fake()->randomElement(['low', 'medium', 'high']),
+            'image_path' => 'https://picsum.photos/seed/' . fake()->uuid() . '/640/480',
             'assigned_user_id' => $user->id,
             'created_by' => $user->id,
             'updated_by' => $user->id,

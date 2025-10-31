@@ -17,7 +17,7 @@ class ProjectFactory extends Factory
             'description' => fake()->realText(),
             'due_date' => fake()->dateTimeBetween('now', '+1 year'),
             'status' => fake()->randomElement(['pending', 'in_progress', 'completed']),
-            'image_path' => fake()->imageUrl(),
+            'image_path' => 'https://picsum.photos/seed/' . fake()->uuid() . '/640/480',
             'created_by' => $user->id,
             'updated_by' => $user->id,
         ];
