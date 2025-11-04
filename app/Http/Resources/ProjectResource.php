@@ -25,13 +25,6 @@ class ProjectResource extends JsonResource
             'updated_at' => $this->updated_at->format('Y-m-d'),
             'creatrd_by' => new UserResource($this->createdBy),
             'updated_by' => new UserResource($this->updatedBy)
-            // Conditionally include relationships
-            // 'tasks' => TaskResource::collection(
-            //     $this->whenLoaded('tasks')
-            // ),
-
-            // Computed or custom fields
-            //'is_overdue' => $this->due_date?->isPast() ?? false,
         ];
     }
 }

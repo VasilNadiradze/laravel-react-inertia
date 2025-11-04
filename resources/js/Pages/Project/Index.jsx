@@ -6,9 +6,27 @@ import {
   PROJECT_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({ projects }) {
+export default function Index({ projects, queryParams = null }) {
+  queryParams = queryParams || {};
+
+  const searchFieldChanged = (name, value) => {
+    if (value) {
+      queryParams[name] = value;
+    } else {
+      delete queryParams[name];
+    }
+
+    router.get(route("project.index", queryParams))
+  };
+
+  const onKeyPress = (name, e) => {
+    if (e.key !== "Enter") return;
+
+    searchFieldChanged(name, e.target.value);
+  };
+
   return (
     <AuthenticatedLayout
       header={
@@ -45,10 +63,26 @@ export default function Index({ projects }) {
                       <TextInput
                         className="w-full"
                         placeholder="Project Name"
+                        defaultValue={queryParams.name}
+                        onBlur={(e) =>
+                          searchFieldChanged("name", e.target.value)
+                        }
+                        onKeyPress={(e) => onKeyPress("name", e)}
                       />
                     </th>
                     <th className="px-3 py-3">
-                      <SelectInput className="w-full" />
+                      <SelectInput
+                        className="w-full"
+                        defaultValue={queryParams.status}
+                        onChange={(e) =>
+                          searchFieldChanged("status", e.target.value)
+                        }
+                      >
+                        <option value="">Select status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                      </SelectInput>
                     </th>
                     <th className="px-3 py-3"></th>
                     <th className="px-3 py-3"></th>
